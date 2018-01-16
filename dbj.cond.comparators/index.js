@@ -114,7 +114,7 @@ comparator you need and use the ones bellow after that.
     (as customary) returns -1 , on not found
     use comparator function
     */
-        var index_of = function (array, searched_element) {
+        var array_lookup = function (array, searched_element) {
 
             if (!Array.isArray(array)) array = [array]; 
 
@@ -122,14 +122,11 @@ comparator you need and use the ones bellow after that.
             function (element) {
                 return (comparator(element, searched_element));
             });
-    };
-
-        // if (!Array.isArray(a)) a = [a]; // 
-        // if (!Array.isArray(b)) b = [b]; // 
+        };
 
         if (comparator(a, b)) return true;          /* covers arr to arr too */
-        if (index_of(b, a ) > -1) return true;            /* sing to arr */
-        if (index_of(a, b ) > -1) return true;            /* arr to sing */
+        if (array_lookup(b, a ) > -1) return true;  /* single in arr */
+        if (array_lookup(a, b ) > -1) return true;  /* arr to single */
 
         return false;
     };
@@ -144,10 +141,6 @@ comparator you need and use the ones bellow after that.
 
     Sparse arrays are also compared for equality
 
-    Solution using every() is fast because it uses native method for iteration
-    but it requires two way check since every will 'skip' over undefined entries
-    this checking [1,,2] vs [1,2] will be considered true.
-    
     this is the tough test, that has to be satisfied:
 
                  equal_arrays([1, 2, , 3], [1, 2, 3]); // => false
