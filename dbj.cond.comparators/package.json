@@ -1,0 +1,9 @@
+{
+  "name": "dbj.cond.comparators",
+  "version": "0.0.0",
+  "description": "dbj.cond.comparators",
+  "main": "app.js",
+  "author": {
+    "name": "dusan"
+  }
+}
