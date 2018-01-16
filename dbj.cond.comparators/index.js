@@ -136,18 +136,6 @@ comparator you need and use the ones bellow after that.
     };
 
     /*
-     Test for equality any JavaScript type. Also used in QUnit
-     equiv({a:1},{b:2}) --> true
-    
-     Discussions and reference: http://philrathe.com/articles/equiv
-     Test suites: http://philrathe.com/tests/equiv
-     Author: Philippe Rathé <prathe@gmail.com>
-    
-     LEGACY -- REMOVED -- does not work in presence of "use strict"
-     */
-
-
-    /*
     Two arrays are considered equal when all their elements 
     fulfill the following conditions:
 
@@ -197,9 +185,6 @@ comparator you need and use the ones bellow after that.
             if (!Array.isArray(a)) a = [a]; // throw TypeError("First argument must be array");
             if (!Array.isArray(b)) b = [b]; // throw TypeError("Second argument must be array");
 
-            if (!!comparator && "function" != typeof comparator)
-                throw TypeError("Third argument is given but is not a function");
-
             return equal_arrays(
                 a, b, comparator || strict_eq
             )
@@ -209,21 +194,12 @@ comparator you need and use the ones bellow after that.
         NOTE: if comparator is given use it otherwise use strict_eq().
         */
         'multi': function (a, b, comparator) {
+
+            if (!!comparator && "function" != typeof comparator)
+                throw TypeError("Third argument is given but is not a function");
+
             return multi_comparator(a, b, comparator || strict_eq);
-        },
-        /*
-
-        LEGACY -- REMOVED -- does not work in presence of "use strict"
-        perform deep comparison of two objects or scalars
-        NOTE: to construct multi+deep comparator, end users will do this :
-
-         dbj.compare(a,b,dbj.compare.deep) ;
-
-        'deep': function (a, b) {
-            return rathe(a, b);
         }
-
-        */
     };
 
     /*

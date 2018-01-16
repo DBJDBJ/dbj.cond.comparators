@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>43310396-2898-4bee-9b21-fc5b06fc9522</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>dbj.cond.comparators.js</StartupFile>
+    <StartupFile>index.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -28,8 +28,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="dbj.cond.comparators.js" />
+    <Compile Include="index.js" />
     <Content Include=".npmignore">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="license.txt">
       <SubType>Code</SubType>
     </Content>
     <Content Include="package.json" />
