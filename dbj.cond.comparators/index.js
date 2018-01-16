@@ -94,22 +94,6 @@ comparator you need and use the ones bellow after that.
     function strict_eq(a, b) { return a === b; }
     // as per ES5 spec this returns false on different types
 
-    /*
-    find single in the array
-    only same types allowed to be compared 
-    (as customary) returns -1 , on not found
-    */
-    var index_of = function (array, searchElement, comparator) {
-        var found = -1;
-        array.every(
-            function (e, i) {
-                if (comparator(e, searchElement)) {
-                    found = i; return false;
-                };
-                return true;
-            });
-        return found;
-    };
 
     /*
     multi_comparator  allows arrays v.s. singles to be compared 
@@ -125,12 +109,27 @@ comparator you need and use the ones bellow after that.
     */
     var multi_comparator = function (a, b, comparator) {
 
-        if (!Array.isArray(a)) a = [a]; // 
-        if (!Array.isArray(b)) b = [b]; // 
+    /*
+    return index of an elelemnt found in the array
+    (as customary) returns -1 , on not found
+    use comparator function
+    */
+        var index_of = function (array, searched_element) {
+
+            if (!Array.isArray(array)) array = [array]; 
+
+        return array.findIndex(
+            function (element) {
+                return (comparator(element, searched_element));
+            });
+    };
+
+        // if (!Array.isArray(a)) a = [a]; // 
+        // if (!Array.isArray(b)) b = [b]; // 
 
         if (comparator(a, b)) return true;          /* covers arr to arr too */
-        if (index_of(b, a, comparator) > -1) return true;            /* sing to arr */
-        if (index_of(a, b, comparator) > -1) return true;            /* arr to sing */
+        if (index_of(b, a ) > -1) return true;            /* sing to arr */
+        if (index_of(a, b ) > -1) return true;            /* arr to sing */
 
         return false;
     };
