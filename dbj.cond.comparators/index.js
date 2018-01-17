@@ -1,14 +1,25 @@
+/*
+Copyright 2018 dbj.org
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
+*/
+(function (undefined) {
 
 /*
 (c) dbj.org
 The absolute core of dbj cores ... perhaps we can call it dbj.core
-*/
-(function (undefined) {
 
-    /*
     additions to ES5 intrinsics
-    */
-    /* moot point: what happens in the presence of another "".format() ? */
+
+    moot point: what happens in the presence of another "".format() ?
+*/
     if ("function" != typeof "".format)
         String.prototype.format = function () {
             var args = arguments;
@@ -20,7 +31,8 @@ The absolute core of dbj cores ... perhaps we can call it dbj.core
 
     var oprot = Object.prototype, aprot = Array.prototype, sprot = String.prototype;
 
-    var /*implementation*/imp_ = {
+    var /*implementation*/
+        imp_ = {
         /* coercion to Int32 as required by asm.js */
         toInt32: function (v_) {
             return v_ | 0;
@@ -78,15 +90,12 @@ The absolute core of dbj cores ... perhaps we can call it dbj.core
     }()
     ));
 
-/*--------------------------------------------------------------------------------------------*/
 /*
-MIT (c) dbj 2013 -2018 
 place for dbj comparators
-dependancy: dbj.kernel (above) and ES5
+dependancy: dbj.core (above) and ES5
 NOTE: since 2013 quite a few comparators have been implemented please be sure which
 comparator you need and use the ones bellow after that.
 */
-/*--------------------------------------------------------------------------------------------*/
 (function (dbj, undefined) {
     "use strict";
 
@@ -96,18 +105,18 @@ comparator you need and use the ones bellow after that.
 
 
     /*
-    multi_comparator  allows arrays v.s. singles to be compared 
+    two_way_lookup  allows arrays v.s. singles to be compared 
     
     Examples:
     
-    multi_comparator( 1, [3,2,1] ) --> true
-    multi_comparator( [3,2,1], 1 ) --> true
-    multi_comparator( function (){ return 1;}, [3,2,1] ) --> false
-    multi_comparator( [3,2,1], ["x",[3,2,1]] ) --> true
+    two_way_lookup( 1, [3,2,1] ) --> true
+    two_way_lookup( [3,2,1], 1 ) --> true
+    two_way_lookup( function (){ return 1;}, [3,2,1] ) --> false
+    two_way_lookup( [3,2,1], ["x",[3,2,1]] ) --> true
     
-    if some complex comparator is used then multi_comparator works for all types
+    if some complex comparator is used then two_way_lookup works for all types
     */
-    var multi_comparator = function (a, b, comparator) {
+    var two_way_lookup = function (a, b, comparator) {
 
     /*
     return index of an elelemnt found in the array
@@ -184,13 +193,21 @@ comparator you need and use the ones bellow after that.
         /*
         Can compare two arrays AND single to array AND array to single value
         NOTE: if comparator is given use it otherwise use strict_eq().
+        DEPERECATED: name 'multi' is deprecated in favour of 'lookup'
         */
         'multi': function (a, b, comparator) {
 
             if (!!comparator && "function" != typeof comparator)
-                throw TypeError("Third argument is given but is not a function");
+                throw TypeError("Secondary comparator is given but is not a function");
 
-            return multi_comparator(a, b, comparator || strict_eq);
+            return two_way_lookup(a, b, comparator || strict_eq);
+        },
+        'lookup': function (a, b, comparator) {
+
+            if (!!comparator && "function" != typeof comparator)
+                throw TypeError("Secondary comparator is given but is not a function");
+
+            return two_way_lookup(a, b, comparator || strict_eq);
         }
     };
 
