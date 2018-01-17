@@ -166,25 +166,29 @@ comparator you need and use the ones bellow after that.
     */
     function equal_arrays(a, b, comparator) {
 
-        return (a.length === b.length) &&
-            a.every(function (e, i) { return comparator(e, b[i]); }) &&
-            b.every(function (e, i) { return comparator(e, a[i]); });
+        return
+            (a.length === b.length) 
+            && a.every(function (e, i) { return comparator(e, b[i]); })
+            && b.every(function (e, i) { return comparator(e, a[i]); })
+            ;
     }
 
     /* interface */
     dbj.compare = {
         'standard': strict_eq,
-        /* 
-        compare two arrays 
-       if comparator is given uses it otherwise uses strict_eq().
+/* 
+deep compare two arrays 
+if comparator is given uses it otherwise uses strict_eq() for default shallow compare
 
-       NOTE: this method is in here because it might prove faster than 
-       dbj.compare.multi()
-        */
+NOTE: this method is in here because it is faster than 
+dbj.compare.lookup()
+*/
         'arr': function (a, b, /* optional */ comparator) {
 
             if (!Array.isArray(a)) a = [a]; // throw TypeError("First argument must be array");
             if (!Array.isArray(b)) b = [b]; // throw TypeError("Second argument must be array");
+
+            if (a.length != b.length) return false;
 
             return equal_arrays(
                 a, b, comparator || strict_eq
@@ -196,11 +200,7 @@ comparator you need and use the ones bellow after that.
         DEPERECATED: name 'multi' is deprecated in favour of 'lookup'
         */
         'multi': function (a, b, comparator) {
-
-            if (!!comparator && "function" != typeof comparator)
-                throw TypeError("Secondary comparator is given but is not a function");
-
-            return two_way_lookup(a, b, comparator || strict_eq);
+            return dbj.compare.lookup(a, b, comparator);
         },
         'lookup': function (a, b, comparator) {
 

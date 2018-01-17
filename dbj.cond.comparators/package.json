@@ -3,7 +3,7 @@
   "private": true,
   "name": "dbj.cond.comparators",
   "version": "0.0.1",
-  "description": "dbj.cond.comparators",
+  "description": "dbj.cond.comparators are 2 deep comparators: 'arr' and 'lookup'. Can be used with dbj.cond",
   "main": "app.js",
   "author": {
     "name": "dbj.org"

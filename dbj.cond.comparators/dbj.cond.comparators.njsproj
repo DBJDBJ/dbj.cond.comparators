@@ -32,7 +32,7 @@
     <Content Include=".npmignore">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="license.txt">
+    <Content Include="LICENSE">
       <SubType>Code</SubType>
     </Content>
     <Content Include="package.json" />
