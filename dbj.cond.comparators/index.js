@@ -166,11 +166,11 @@ comparator you need and use the ones bellow after that.
     */
     function equal_arrays(a, b, comparator) {
 
-        return
-            (a.length === b.length) 
-            && a.every(function (e, i) { return comparator(e, b[i]); })
-            && b.every(function (e, i) { return comparator(e, a[i]); })
-            ;
+        if (a.length != b.length) return false;
+
+        for (i = 0; i < a.length; i++)
+            if (!comparator(a[i], b[i])) return false;
+        return true;     
     }
 
     /* interface */
