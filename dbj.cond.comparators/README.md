@@ -7,7 +7,9 @@
 
 # &nbsp;
 
-Comparators to be used either standalone or with <a href="https://www.npmjs.com/package/dbj.cond" target="_blank">dbj.cond</a>
+dbj Comparators to be used either standalone or with <a href="https://www.npmjs.com/package/dbj.cond" target="_blank">dbj.cond</a>
+
+The purpose of this comparators is functionality not speed. They are most usefull when used with dbj.cond, or some such mechanism for complex conditional programing made feasible.
 
 For overview and usage with dbj.cond, and simillar, 
 please go to the short <a href="https://github.com/DBJDBJ/dbj.cond/blob/master/man.md" target="_blank">**online manual**</a> on the GitHub project. 
