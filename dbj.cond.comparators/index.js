@@ -134,8 +134,8 @@ comparator you need and use the ones bellow after that.
         };
 
         if (comparator(a, b)) return true;          /* covers arr to arr too */
-        if (array_lookup(b, a ) > -1) return true;  /* single in arr */
-        if (array_lookup(a, b ) > -1) return true;  /* arr to single */
+        if (array_lookup(b, a ) > -1) return true;  /* a found in arr b */
+        if (array_lookup(a, b ) > -1) return true;  /* b found in arr a */
 
         return false;
     };
@@ -178,30 +178,39 @@ comparator you need and use the ones bellow after that.
         'standard': strict_eq,
 /* 
 deep compare two arrays 
-if comparator is given uses it otherwise uses strict_eq() for default shallow compare
+
+if comparator is given it is used
+otherwise strict_eq() is used for default shallow comparisons.
 
 NOTE: this method is in here because it is faster than 
 dbj.compare.lookup()
 */
         'arr': function (a, b, /* optional */ comparator) {
 
+            if (!!comparator && "function" != typeof comparator)
+                throw TypeError("Secondary comparator is given but is not a function");
+
             if (!Array.isArray(a)) a = [a]; // throw TypeError("First argument must be array");
             if (!Array.isArray(b)) b = [b]; // throw TypeError("Second argument must be array");
-
-            if (a.length != b.length) return false;
 
             return equal_arrays(
                 a, b, comparator || strict_eq
             )
         },
         /*
-        Can compare two arrays AND single to array AND array to single value
-        NOTE: if comparator is given use it otherwise use strict_eq().
-        DEPERECATED: name 'multi' is deprecated in favour of 'lookup'
+        DEPRECATED: name 'multi' is deprecated in favour of 'lookup'
         */
         'multi': function (a, b, comparator) {
             return dbj.compare.lookup(a, b, comparator);
         },
+/*
+Can lookup both ways from a ot b or b to a.
+        Where either can be a single value or object or array.
+
+That is if deep seocnd comparator is given.
+
+Otherwise strict_eq() is used for default shallow comparisons.
+*/
         'lookup': function (a, b, comparator) {
 
             if (!!comparator && "function" != typeof comparator)
