@@ -8,6 +8,15 @@
   "author": {
     "name": "dbj.org"
   },
+  "keywords": [
+    "equal",
+    "comparator",
+    "if",
+    "else",
+    "switch",
+    "LISP"
+  ],
+  "analyze": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/DBJDBJ/dbj.cond.comparators"
