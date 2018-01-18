@@ -168,7 +168,7 @@ comparator you need and use the ones bellow after that.
 
         if (a.length != b.length) return false;
 
-        for (i = 0; i < a.length; i++)
+        for (var i = 0; i < a.length; i++)
             if (!comparator(a[i], b[i])) return false;
         return true;     
     }
