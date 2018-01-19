@@ -193,8 +193,8 @@ dbj.compare.lookup()
             if (!!comparator && "function" != typeof comparator)
                 throw TypeError("Secondary comparator is given but is not a function");
 
-            if (!Array.isArray(a)) a = [a]; // throw TypeError("First argument must be array");
-            if (!Array.isArray(b)) b = [b]; // throw TypeError("Second argument must be array");
+            if (!Array.isArray(a)) a = [a]; // cludge or brilliance ;)
+            if (!Array.isArray(b)) b = [b]; // 
 
             return equal_arrays(
                 a, b, comparator || strict_eq
@@ -222,6 +222,26 @@ Otherwise strict_eq() is used for default shallow comparisons.
                 throw TypeError("Secondary comparator is given but is not a function");
 
             return two_way_lookup(a, b, comparator || strict_eq);
+        },
+
+        'make': function (name_, secondary_comparator) {
+            const production_line_ = {
+                'arr': function () {
+                    return function (a, b) {
+                        return dbj.compare.arr(a, b, secondary_comparator);
+                    }
+                  },
+                'lookup': function () {
+                    return function (a, b) {
+                        return dbj.compare.lookup(a, b, secondary_comparator);
+                    }
+                }
+            };
+            if (name_ in production_line_) {
+                return production_line_[name_](secondary_comparator);
+            } else {
+                throw TypeError("[dbj.compare.make][Error][Name '" + name_ + " is not available, we curently deliver 'arr' and 'lookup' only" );
+            }
         }
     };
 
@@ -231,10 +251,6 @@ Otherwise strict_eq() is used for default shallow comparisons.
     */
     if ("undefined" != typeof module) {
         module['exports'] = dbj;  // for node js usage
-
-        // also ...
-        
-         exports.dbj.compare.multi = 
     }
 
 }(function () {
