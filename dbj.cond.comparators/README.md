@@ -11,10 +11,57 @@ dbj Comparators to be used either standalone or with <a href="https://www.npmjs.
 
 The purpose of this comparators is functionality not speed. They are most usefull when used with dbj.cond, or some such mechanism for complex conditional programing made feasible.
 
-For overview and usage with dbj.cond, and simillar, 
+The API
+```
+npm install dbj.cond.comparators
+```
+```javascript
+require("dbj.cond.comparators");
+// after this we have dbj.compare available
+// standard strict equaility (aka '===')
+// returns true
+dbj.compare.standard(42,42); 
+// arrays comparison
+// is comparator argument is provided it is deep
+// otherwise it is shallow "===" comparison
+// for array elements comparing
+// returns true
+dbj.compare.arr([42],[42]);
+// transforms both arguments to arrays
+// returns true
+dbj.compare.arr( 42 , 42 );
+// two way lookup comparison
+// is comparator argument is provided it is deep
+// otherwise it is shallow "===" comparison
+// returns false
+dbj.compare.lookup( [42], [42 ]); 
+// returns true
+dbj.compare.lookup( 42, 42); 
+// secondary comparator may be given 
+// to both 'arr' and 'lookup'
+// it is used for deep comparisons 
+// it can be passed direct as third argument or factory
+// method 'make' might be used as a better option
+const fdeq = require('fast-deep-equal');
+const arr = dbj.compare.make('arr', fdeq) ;
+// returns true
+arr([[42]],[[42]]);
+// returns true
+// arguments are transformed to arrays
+arr({a:42},{a:42});
+//
+const lookup  = dbj.compare.make('lookup', fdeq );
+// returns true
+lookup([1,2,3], 2);
+// also returns true
+lookup([1,{a:2},3], {a:2})
+//
+```
+
+For overview and usage with dbj.cond, 
 please go to the short <a href="https://github.com/DBJDBJ/dbj.cond/blob/master/man.md" target="_blank">**online manual**</a> on the GitHub project. 
 
-For testing project please go to 
+For testing project please go straight to 
 <a href="https://github.com/DBJDBJ/dbj.cond.test" target="_blank">**dbj.cond.test**</a> on GitHub.
 
 Please do feel free to send us your code and comments. 
