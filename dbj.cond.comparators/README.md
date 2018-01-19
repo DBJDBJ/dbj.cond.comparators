@@ -31,10 +31,10 @@ dbj.compare.arr([42],[42]);
 // returns true
 dbj.compare.arr( 42 , 42 );
 // two way lookup comparison
-// is comparator argument is provided it is deep
+// if comparator argument is provided it is deep
 // otherwise it is shallow "===" comparison
 // returns false
-dbj.compare.lookup( [42], [42 ]); 
+dbj.compare.lookup( [42], [42]); 
 // returns true
 dbj.compare.lookup( 42, 42); 
 // secondary comparator may be given 

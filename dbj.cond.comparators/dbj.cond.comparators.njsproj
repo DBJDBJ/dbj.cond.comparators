@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="index.js" />
+    <Content Include=".eslintrc.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include=".npmignore">
       <SubType>Code</SubType>
     </Content>
