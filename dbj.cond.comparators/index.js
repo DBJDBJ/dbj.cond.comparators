@@ -10,6 +10,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
+
+const util = require('util');
+
 (function (undefined) {
 
 /*
@@ -201,7 +204,9 @@ dbj.compare.lookup()
         DEPRECATED: name 'multi' is deprecated in favour of 'lookup'
         */
         'multi': function (a, b, comparator) {
-            return dbj.compare.lookup(a, b, comparator);
+            util.deprecate(() => {
+                return dbj.compare.lookup(a, b, comparator);
+            }, 'DEPRECATED: name "multi" is deprecated in favour of "lookup"');
         },
 /*
 Can lookup both ways from a ot b or b to a.
@@ -226,6 +231,10 @@ Otherwise strict_eq() is used for default shallow comparisons.
     */
     if ("undefined" != typeof module) {
         module['exports'] = dbj;  // for node js usage
+
+        // also ...
+        
+         exports.dbj.compare.multi = 
     }
 
 }(function () {
