@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>43310396-2898-4bee-9b21-fc5b06fc9522</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>index.js</StartupFile>
+    <StartupFile>dbj.cond.comparators.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="index.js" />
+    <Compile Include="dbj.cond.comparators.js" />
     <Content Include=".eslintrc.json">
       <SubType>Code</SubType>
     </Content>
