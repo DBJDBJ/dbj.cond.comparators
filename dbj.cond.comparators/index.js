@@ -15,8 +15,7 @@ See the License for the specific language governing
 permissions and limitations under the License.
 */
 
-const util = require('util');
-
+/*global dbj:true*/
 (function (undefined) {
 
 /*
@@ -29,16 +28,19 @@ The absolute core of dbj cores ... perhaps we can call it dbj.core
 */
     if ("function" != typeof "".format)
         String.prototype.format = function () {
-            var args = arguments;
+            let args = arguments;
             return this.replace(/\{(\d|\d\d)\}/g, function ($0) {
-                var idx = 1 * $0.match(/\d+/)[0]; return args[idx] !== undefined ? args[idx] : (args[idx] === "" ? "" : $0);
+                let idx = 1 * $0.match(/\d+/)[0];
+                return args[idx] !== undefined
+                    ? args[idx]
+                    : (args[idx] === "" ? "" : $0);
             }
             );
-        }
+        };
 
-    var oprot = Object.prototype, aprot = Array.prototype, sprot = String.prototype;
+    const oprot = Object.prototype, aprot = Array.prototype, sprot = String.prototype;
 
-    var /*implementation*/
+    const /*implementation*/
         imp_ = {
         /* coercion to Int32 as required by asm.js */
         toInt32: function (v_) {
@@ -47,13 +49,13 @@ The absolute core of dbj cores ... perhaps we can call it dbj.core
         isEven: function (value) { return (imp_.toInt32(value) % 2 == 0); },
         /* dbj's type system */
         type: (function () {
-            var rx = /\w+/g, tos = oprot.toString;
+            let rx = /\w+/g, tos = oprot.toString;
             return function (o) {
                 if (typeof o === "undefined") return "undefined";
                 if (o === null) return "null";
                 if ("number" === typeof (o) && isNaN(o)) return "nan";
                 return (tos.call(o).match(rx)[1]).toLowerCase();
-            }
+            };
         }()),
         isObject: function (o) { return "object" === imp_.type(o); },
         isFunction: function (o) { return "function" === imp_.type(o); },
@@ -65,8 +67,7 @@ The absolute core of dbj cores ... perhaps we can call it dbj.core
 
         "toString": function () { return "dbj(); kernel 1.2.0"; },
         /* 
-        coercion to Int32 
-        also required by asm.js
+        coercion to Int32 as required by asm.js
         */
         "toInt32": imp_.toInt32,
         "isEven": imp_.isEven,
@@ -123,14 +124,14 @@ comparator you need and use the ones bellow after that.
     
     if some complex comparator is used then two_way_lookup works for all types
     */
-    var two_way_lookup = function (a, b, comparator) {
+    const two_way_lookup = function (a, b, comparator) {
 
     /*
     return index of an elelemnt found in the array
     (as customary) returns -1 , on not found
     use comparator function
     */
-        var array_lookup = function (array, searched_element) {
+        const array_lookup = function (array, searched_element) {
 
             if (!Array.isArray(array)) array = [array]; 
 
@@ -175,7 +176,7 @@ comparator you need and use the ones bellow after that.
 
         if (a.length != b.length) return false;
 
-        for (var i = 0; i < a.length; i++)
+        for (let i = 0; i < a.length; i++)
             if (!comparator(a[i], b[i])) return false;
         return true;     
     }
@@ -202,15 +203,13 @@ dbj.compare.lookup()
 
             return equal_arrays(
                 a, b, comparator || strict_eq
-            )
+            );
         },
         /*
-        DEPRECATED: name 'multi' is deprecated in favour of 'lookup'
+        REMOVED! name 'multi' is removed in favour of 'lookup'
         */
-        'multi': function (a, b, comparator) {
-            util.deprecate(() => {
-                return dbj.compare.lookup(a, b, comparator);
-            }, 'DEPRECATED: name "multi" is deprecated in favour of "lookup"');
+        'multi': function () {
+            throw TypeError('[dbj.cond.comparators]REMOVED: name "multi" is deprecated in favour of "lookup"');
         },
 /*
 Can lookup both ways from a ot b or b to a.
@@ -233,12 +232,12 @@ Otherwise strict_eq() is used for default shallow comparisons.
                 'arr': function () {
                     return function (a, b) {
                         return dbj.compare.arr(a, b, secondary_comparator);
-                    }
+                    };
                   },
                 'lookup': function () {
                     return function (a, b) {
                         return dbj.compare.lookup(a, b, secondary_comparator);
-                    }
+                    };
                 }
             };
             if (name_ in production_line_) {
